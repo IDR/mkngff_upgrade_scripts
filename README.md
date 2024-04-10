@@ -115,6 +115,7 @@ for i in $(ls); do sed -i 's/SECRETUUID/8add790d-7855-46f6-8239-c6a72937d572/g' 
 
 Now we can use a loop similar to the one above to run each sql script and also run `omero mkngff symlink` to create symlinks in the `ManagedRepo`.
 This also generates `.zarr.bfoptions` files alongside the `.zarr` symlinks, with config suitable for IDR.
+The `--clientpath` is used to populate the `alt_source` option in each `.zarr.bfoptions` file.
 
 ```
 cd ngff_filesets
@@ -124,8 +125,10 @@ for r in $(cat $IDRID.csv); do
   uuid=$(echo $biapath | cut -d'/' -f2)
   fsid=$(echo $r | cut -d',' -f3 | tr -d '[:space:]')
   psql -U omero -d idr -h $DBHOST -f "$IDRID/$fsid.sql"
-  omero mkngff symlink /data/OMERO/ManagedRepository $fsid "/bia-integrator-data/$biapath/$uuid.zarr" --bfoptions
+  omero mkngff symlink /data/OMERO/ManagedRepository $fsid "/bia-integrator-data/$biapath/$uuid.zarr" --bfoptions --clientpath="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/$biapath/$uuid.zarr"
 done
 ```
 
 When you try to view images from these new Filesets, this will trigger memo file generation. This can take a few seconds for single images up to a couple of hours for big plates. When complete the Images will be viewable!
+
+In order to regenerate memo files for all data in IDR, see https://github.com/IDR/deployment/blob/master/docs/operating-procedures.md#bio-formats-cache-regeneration.
