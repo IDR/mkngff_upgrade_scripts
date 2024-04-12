@@ -106,6 +106,13 @@ psql -U omero -d idr -h $DBHOST -c "select uuid from (select * from session wher
 (1 row)
 ```
 
+Setup the `psql` function we need (only need to do this once):
+```
+cd
+omero mkngff setup > setup.sql
+psql -U omero -d idr -h $DBHOST -f setup.sql
+```
+
 As user with `sudo` permissions (not `omero-server`) you need to replace `SECRETUUID` placeholder in the `sql` scripts with the `uuid` above.
 
 ```
@@ -118,6 +125,8 @@ This also generates `.zarr.bfoptions` files alongside the `.zarr` symlinks, with
 The `--clientpath` is used to populate the `alt_source` option in each `.zarr.bfoptions` file.
 
 ```
+omero login
+
 cd ngff_filesets
 export IDRID=idr0012
 for r in $(cat $IDRID.csv); do
