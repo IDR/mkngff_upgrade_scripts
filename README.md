@@ -89,10 +89,11 @@ When you are ready to apply these script to update Filesets on IDR...
 Get Database password (and host) needed for `psql`, and set these to env variables:
 
 ```
+source /opt/omero/server/venv3/bin/activate
 export OMERODIR=/opt/omero/server/OMERO.server
-omero config get | grep omero.db.host
+omero config get omero.db.host
 export DBHOST=192.168.10.231
-omero config get --show-password | grep omero.db.pass
+omero config get omero.db.pass
 export PGPASSWORD=[********]
 ```
 
