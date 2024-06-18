@@ -3,7 +3,7 @@ UPDATE pixels SET name = 'METADATA.ome.xml', path = 'demo_2/2016-05/07/02-36-52.
 begin;
     select mkngff_fileset(
       18655,
-      '9630ba1e-ed3a-42e3-9296-59ccf23a7039',
+      'SECRETUUID',
       'cdf35825-def1-4580-8d0b-9c349b8f78d6',
       'demo_2/2016-05/07/02-36-52.924_mkngff/',
       array[
